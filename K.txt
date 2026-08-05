@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center">
+    <h3>📊 داشبورد</h3>
+    <div><span class="badge bg-success">کاربر: {{ username }}</span> <a href="/logout" class="btn btn-danger btn-sm">خروج</a></div>
+</div>
+<div class="card shadow">
+    <div class="card-header d-flex justify-content-between">
+        <span>لیست کاربران ({{ users|length }})</span>
+        <a href="/add_user" class="btn btn-primary btn-sm">➕ کاربر جدید</a>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead><tr><th>شناسه</th><th>نام کاربری</th><th>نقش</th><th>عملیات</th></tr></thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{% if user.is_admin %}👑 ادمین{% else %}👤 کاربر{% endif %}</td>
+                    <td>
+                        <a href="/delete_user/{{ user.id }}" class="btn btn-danger btn-sm" onclick="return confirm('حذف شود؟')">🗑️</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
